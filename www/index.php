@@ -1,5 +1,6 @@
 <?php
 
+require_once "../Registry.php";
 $config = require "../config.php";
 
 set_include_path($config['root'] . PATH_SEPARATOR . get_include_path());
@@ -12,10 +13,11 @@ if (!isset($_GET['service'])) {
 
 $method = $_SERVER['REQUEST_METHOD'];
 $service = $_GET['service'];
-$servicePath = realpath($config['root'] . '/services/' . $service . '.php');
+$root = Registry::get('root');
+$servicePath = realpath(Registry::get('root') . '/services/' . $service . '.php');
 
 // unexisting service
-if (!$servicePath || strpos($servicePath, $config['root'] . '/services/') != 0) {
+if (!$servicePath || strpos($servicePath, $root . '/services/') != 0) {
 	header("HTTP/1.0 400 Bad Request");
 	exit(1);
 }
