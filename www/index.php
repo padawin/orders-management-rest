@@ -2,6 +2,8 @@
 
 $config = require "../config.php";
 
+set_include_path($config['root'] . PATH_SEPARATOR . get_include_path());
+
 // no service provided
 if (!isset($_GET['service'])) {
 	header("HTTP/1.0 400 Bad Request");
