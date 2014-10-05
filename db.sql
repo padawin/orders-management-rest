@@ -1,5 +1,20 @@
+CREATE TABLE order_status (
+	id_status INTEGER PRIMARY KEY AUTOINCREMENT,
+	code VARCHAR(3) UNIQUE NOT NULL,
+	label VARCHAR(30) NOT NULL
+);
+
+INSERT INTO order_status (code, label)
+	VALUES ('DRA', 'DRAFT'),
+		('PLA', 'PLACED'),
+		('PAI', 'PAID'),
+		('CAN','CANCELLED');
+
 CREATE TABLE orders (
 	id_order INTEGER PRIMARY KEY AUTOINCREMENT,
+	vat FLOAT NOT NULL DEFAULT 0,
+	id_status INTEGER REFERENCES order_status(id_status),
+	cancel_reason TEXT,
 	date TIMESTAMP WITH TIMEZONE NOT NULL DEFAULT CURRENT_DATE,
 	date_creation TIMESTAMP WITH TIMEZONE NOT NULL DEFAULT CURRENT_DATE
 );
@@ -8,4 +23,11 @@ CREATE TABLE product (
 	id_product INTEGER PRIMARY KEY AUTOINCREMENT,
 	name VARCHAR(100) UNIQUE NOT NULL,
 	price FLOAT NOT NULL
+);
+
+CREATE TABLE order_item (
+	id_order_item INTEGER PRIMARY KEY AUTOINCREMENT,
+	id_order INTEGER REFERENCES orders(id_order) NOT NULL,
+	id_product INTEGER REFERENCES product(id_product) NOT NULL,
+	quantity INTEGER NOT NULL,
 );
