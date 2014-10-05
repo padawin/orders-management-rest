@@ -4,6 +4,8 @@ set_include_path(realpath('../') . PATH_SEPARATOR . get_include_path());
 require_once "config.php";
 require_once "Registry.php";
 
+header('Content-Type: application/json');
+
 // no service provided
 if (!isset($_GET['service'])) {
 	header("HTTP/1.0 400 Bad Request");
@@ -29,7 +31,7 @@ try {
 		case 'GET':
 			$criterias = $_GET;
 			unset($criterias['service']);
-			$service->get($criterias);
+			echo json_encode($service->get($criterias));
 			break;
 		default:
 			header("HTTP/1.0 400 Bad Request");
