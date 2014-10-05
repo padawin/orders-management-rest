@@ -75,6 +75,20 @@ class Sqlite implements Model
 		return $this->_execute($sql, array_values($values))[1];
 	}
 
+	public function delete(array $conditions)
+	{
+		$sql = "DELETE FROM " . static::$_table;
+
+		foreach ($conditions as $col => $val) {
+			$where[] = $col . ' = :' . $col;
+		}
+
+		$sql .= (!empty($where) ? " WHERE " . implode(" AND ", $where) : '');
+
+		$stmt = $this->_execute($sql, $conditions)[0];
+		return $stmt->rowCount();
+	}
+
 	protected function _execute($sql, $params = array())
 	{
 		try {

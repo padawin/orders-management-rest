@@ -27,4 +27,9 @@ class product extends Service
 	{
 		return \entities\Product::addProduct($values);
 	}
+
+	public function delete(array $conditions = array())
+	{
+		return \entities\Product::deleteProducts($conditions);
+	}
 }

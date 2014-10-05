@@ -55,6 +55,18 @@ try {
 
 			echo json_encode($service->put($values, $conditions));
 			break;
+		case 'DELETE':
+			$conditions = array();
+			if (isset($_GET['conditions'])) {
+				$conditions = json_decode($_GET['conditions'], true);
+			}
+
+			if ($conditions === false) {
+				throw new \exceptions\BadRequest;
+			}
+
+			echo json_encode($service->delete($conditions));
+			break;
 		default:
 			throw new \exceptions\BadRequest;
 	}
