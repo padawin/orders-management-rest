@@ -37,6 +37,24 @@ try {
 			unset($criterias['service']);
 			echo json_encode($service->get($criterias));
 			break;
+		case 'POST':
+			$criterias = $_GET;
+			unset($criterias['service']);
+			echo json_encode($service->post($criterias));
+			break;
+		case 'PUT':
+			$values = json_decode(isset($_GET['values']) ? $_GET['values'] : '', true);
+			$conditions = array();
+			if (isset($_GET['conditions'])) {
+				$conditions = json_decode($_GET['conditions'], true);
+			}
+
+			if ($values === false || $conditions === false) {
+				throw new \exceptions\BadRequest;
+			}
+
+			echo json_encode($service->put($values, $conditions));
+			break;
 		default:
 			throw new \exceptions\BadRequest;
 	}
