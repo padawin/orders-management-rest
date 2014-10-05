@@ -1,9 +1,8 @@
 <?php
 
-require_once "../Registry.php";
-$config = require "../config.php";
-
-set_include_path($config['root'] . PATH_SEPARATOR . get_include_path());
+set_include_path(realpath('../') . PATH_SEPARATOR . get_include_path());
+require_once "config.php";
+require_once "Registry.php";
 
 // no service provided
 if (!isset($_GET['service'])) {
