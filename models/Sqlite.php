@@ -56,7 +56,8 @@ class Sqlite implements Model
 		$sql .= implode(', ', $fields)
 		. (!empty($where) ? " WHERE " . implode(" AND ", $where) : '');
 
-		return $this->_execute($sql, $params)[1];
+		$stmt = $this->_execute($sql, $params)[0];
+		return $stmt->rowCount();
 	}
 
 	public function insert(array $values)
