@@ -3,6 +3,8 @@
 set_include_path(realpath('../') . PATH_SEPARATOR . get_include_path());
 require_once "config.php";
 require_once "Registry.php";
+require_once "exceptions/BadRequest.php";
+require_once "exceptions/Duplicate.php";
 
 header('Content-Type: application/json');
 
@@ -36,9 +38,16 @@ try {
 			echo json_encode($service->get($criterias));
 			break;
 		default:
-			header("HTTP/1.0 400 Bad Request");
-			exit(1);
+			throw new \exceptions\BadRequest;
 	}
+}
+catch (\exceptions\BadRequest $e) {
+	header("HTTP/1.0 400 Bad Request", true, 400);
+	echo "Bad Request";
+}
+catch (\exceptions\Duplicate $e) {
+	header("HTTP/1.0 409 Duplicate content", true, 400);
+	echo "Duplicate content";
 }
 catch (\Exception $e) {
 	var_dump($e);
