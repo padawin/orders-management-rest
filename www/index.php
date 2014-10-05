@@ -9,6 +9,7 @@ header('Content-Type: application/json');
 // no service provided
 if (!isset($_GET['service'])) {
 	header("HTTP/1.0 400 Bad Request");
+	echo "Bad Request";
 	exit(1);
 }
 
@@ -20,6 +21,7 @@ $servicePath = realpath(Registry::get('root') . '/services/' . $service . '.php'
 // unexisting service
 if (!$servicePath || strpos($servicePath, $root . '/services/') != 0) {
 	header("HTTP/1.0 400 Bad Request");
+	echo "Bad Request";
 	exit(1);
 }
 
@@ -41,5 +43,5 @@ try {
 catch (\Exception $e) {
 	var_dump($e);
 	header("HTTP/1.0 500 Internal Server Error");
-	exit(1);
+	echo "Internal Server Error";
 }
