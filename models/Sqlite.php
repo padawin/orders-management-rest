@@ -4,6 +4,8 @@ namespace models;
 
 require_once "models/Model.php";
 require_once "Registry.php";
+require_once "exceptions/BadRequest.php";
+require_once "exceptions/Duplicate.php";
 
 class Sqlite implements Model
 {
@@ -34,8 +36,26 @@ class Sqlite implements Model
 
 		$sql .= implode(" AND ", $where);
 
-		$stmt = self::getConnection()->prepare($sql);
-		$stmt->execute($criterias);
+		$stmt = $this->_execute($sql, $criterias)[0];
 		return $stmt->fetchAll();
+	}
+
+	protected function _execute($sql, $params = array())
+	{
+		try {
+			$stmt = self::getConnection()->prepare($sql);
+			$result = $stmt->execute($params);
+		}
+		catch (\Exception $e) {
+			switch ($e->getCode()) {
+				case 23000:
+					throw new \exceptions\Duplicate;
+				case 'HY000':
+					throw new \exceptions\BadRequest;
+				default:
+					throw $e;
+			}
+		}
+		return array($stmt, $result);
 	}
 }
