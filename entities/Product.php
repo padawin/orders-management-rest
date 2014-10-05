@@ -26,8 +26,8 @@ class Product extends Entity
 		return array(true);
 	}
 
-	public static function deleteProducts(array $values = array())
+	public static function deleteProducts(array $conditions = array())
 	{
-		return static::getModel()->insert($values);
+		return static::getModel()->delete($conditions);
 	}
 }
