@@ -20,6 +20,12 @@ class Order extends Entity
 		return static::getModel()->get($criterias);
 	}
 
+	public static function updateOrders(array $values = array(), array $conditions = array())
+	{
+		self::_check($values);
+		return array(static::getModel()->update($values, $conditions));
+	}
+
 	public static function createOrder($date, $vat)
 	{
 		self::_check(array('date' => $date, 'vat' => $vat));
