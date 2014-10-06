@@ -49,7 +49,7 @@ try {
 				$conditions = json_decode($_GET['conditions'], true);
 			}
 
-			if ($values === false || $conditions === false) {
+			if (empty($values) || $conditions === false) {
 				throw new \exceptions\BadRequest;
 			}
 
