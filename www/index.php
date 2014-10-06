@@ -75,6 +75,10 @@ catch (InvalidArgumentException $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo $e->getMessage();
 }
+catch (\exceptions\MethodNotAllowed $e) {
+	header("HTTP/1.0 405 Method not allowed Request", true, 400);
+	echo $e->getMessage();
+}
 catch (\exceptions\BadRequest $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo "Bad Request";
