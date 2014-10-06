@@ -63,6 +63,10 @@ class Order extends Entity
 		if (!empty($errors)) {
 			throw new \InvalidArgumentException(json_encode($errors));
 		}
+	}
 
+	public static function existsWithId($idOrder)
+	{
+		return count(static::getModel()->get(array('id_order' => $idOrder))) == 1;
 	}
 }
