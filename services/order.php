@@ -5,6 +5,7 @@ namespace services;
 require_once "services/Service.php";
 require_once "entities/Order.php";
 require_once "models/Order/Sqlite.php";
+require_once "Registry.php";
 
 class order extends Service
 {
@@ -16,5 +17,27 @@ class order extends Service
 	public function get(array $criterias = array())
 	{
 		return \entities\Order::getOrders($criterias);
+	}
+
+	public function post(array $criterias = array())
+	{
+		$default = array(
+			'date' => time(),
+			'vat' => \Registry::get('default-vat')
+		);
+		$criterias = array_merge(
+			$default,
+			array_filter(
+				array_fill_keys(
+					array_keys($default),
+					$criterias
+				)
+			)
+		);
+
+		return \entities\Order::createOrder(
+			$criterias['date'],
+			$criterias['vat']
+		);
 	}
 }
