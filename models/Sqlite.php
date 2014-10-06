@@ -72,7 +72,8 @@ class Sqlite implements Model
 			implode(', ', array_fill(0, count($values), '?'))
 		);
 
-		return $this->_execute($sql, array_values($values))[1];
+		$stmt = $this->_execute($sql, array_values($values))[0];
+		return self::getConnection()->lastInsertId();
 	}
 
 	public function delete(array $conditions)
