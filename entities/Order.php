@@ -22,18 +22,7 @@ class Order extends Entity
 
 	public static function createOrder($date, $vat)
 	{
-		$error = array();
-		if (!is_float($vat) || !is_int($vat)) {
-			$error['vat'] = "The vat must be an integer or a float";
-		}
-		if (time() > $date) {
-			$error['date'] = "The order date must not be in the past";
-		}
-
-		if (!empty($errors)) {
-			throw new \InvalidArgumentException(json_encode($errors));
-		}
-
+		self::_check(array('date' => $date, 'vat' => $vat));
 		return static::getModel()->insert(
 			array(
 				'date' => $date,
@@ -41,5 +30,33 @@ class Order extends Entity
 				'status' => self::STATUS_DRAFT
 			)
 		);
+	}
+
+	protected static function _check(array $values)
+	{
+		$error = array();
+		if (
+			isset($values['vat'])
+			&& (
+				!is_float($values['vat'])
+				|| !is_int($values['vat'])
+			)
+		) {
+			$error['vat'] = "The vat must be an integer or a float";
+		}
+
+		if (isset($values['date'])) {
+			if (!is_int($values['date'])) {
+				$error['date'] = "The order date must be a valid timestamp";
+			}
+			else if (time() > $values['date']) {
+				$error['date'] = "The order date must not be in the past";
+			}
+		}
+
+		if (!empty($errors)) {
+			throw new \InvalidArgumentException(json_encode($errors));
+		}
+
 	}
 }
