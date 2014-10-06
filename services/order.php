@@ -25,13 +25,12 @@ class order extends Service
 			'date' => time(),
 			'vat' => \Registry::get('default-vat')
 		);
+
 		$criterias = array_merge(
 			$default,
-			array_filter(
-				array_fill_keys(
-					array_keys($default),
-					$criterias
-				)
+			array_intersect_key(
+				$criterias,
+				$default
 			)
 		);
 
