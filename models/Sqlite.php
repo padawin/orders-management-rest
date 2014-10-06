@@ -99,9 +99,9 @@ class Sqlite implements Model
 		catch (\Exception $e) {
 			switch ($e->getCode()) {
 				case 23000:
-					throw new \exceptions\Duplicate;
+					throw new \exceptions\Duplicate($e->getMessage());
 				case 'HY000':
-					throw new \exceptions\BadRequest;
+					throw new \exceptions\BadRequest($e->getMessage());
 				default:
 					throw $e;
 			}
