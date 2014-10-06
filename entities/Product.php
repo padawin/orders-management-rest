@@ -22,8 +22,7 @@ class Product extends Entity
 
 	public static function addProduct(array $values = array())
 	{
-		static::getModel()->insert($values);
-		return array(true);
+		return static::getModel()->insert($values);
 	}
 
 	public static function deleteProducts(array $conditions = array())
