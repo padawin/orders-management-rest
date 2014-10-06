@@ -39,4 +39,9 @@ class order extends Service
 			$criterias['vat']
 		);
 	}
+
+	public function put(array $values = array(), array $conditions = array())
+	{
+		return \entities\Order::updateOrders($values, $conditions);
+	}
 }
