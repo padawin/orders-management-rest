@@ -72,7 +72,8 @@ class Sqlite implements Model
 			implode(', ', array_fill(0, count($values), '?'))
 		);
 
-		return $this->_execute($sql, array_values($values))[1];
+		$stmt = $this->_execute($sql, array_values($values))[0];
+		return self::getConnection()->lastInsertId();
 	}
 
 	public function delete(array $conditions)
@@ -98,9 +99,9 @@ class Sqlite implements Model
 		catch (\Exception $e) {
 			switch ($e->getCode()) {
 				case 23000:
-					throw new \exceptions\Duplicate;
+					throw new \exceptions\Duplicate($e->getMessage());
 				case 'HY000':
-					throw new \exceptions\BadRequest;
+					throw new \exceptions\BadRequest($e->getMessage());
 				default:
 					throw $e;
 			}
