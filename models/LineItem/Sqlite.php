@@ -17,7 +17,8 @@ class Sqlite extends \models\Sqlite
 			li.id_order,
 			li.id_product,
 			name,
-			quantity
+			quantity,
+			price
 		FROM
 			line_item AS li
 			JOIN orders ON li.id_order = orders.id_order
