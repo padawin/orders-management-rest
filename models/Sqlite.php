@@ -11,6 +11,7 @@ class Sqlite implements Model
 {
 	protected static $_table;
 	protected static $_connection;
+	protected static $_updatableFields = array();
 
 	public static function getConnection()
 	{
@@ -42,6 +43,14 @@ class Sqlite implements Model
 
 	public function update(array $values, array $criterias = array())
 	{
+		$values = array_intersect_key(
+			$values,
+			array_flip(static::$_updatableFields)
+		);
+		if (empty($values)) {
+			throw new \InvalidArgumentException("No value to update");
+		}
+
 		$sql = "UPDATE " . static::$_table . " SET ";
 		$params = $fields = $where = array();
 		foreach ($values as $col => $val) {
