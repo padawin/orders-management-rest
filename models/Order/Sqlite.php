@@ -10,4 +10,33 @@ class Sqlite extends \models\Sqlite
 	protected static $_updatableFields = array(
 		'vat', 'date', 'status', 'cancel_reason'
 	);
+
+	public function get(array $criterias = array())
+	{
+		$sql = "
+			SELECT
+				" . self::$_table . ".id_order,
+				vat,
+				date,
+				status,
+				cancel_reason,
+				date_creation,
+				SUM(price * quantity) AS net_price,
+				SUM(price * quantity) + SUM(price * quantity) * vat AS gross_price
+			FROM "
+				. self::$_table
+				. ' JOIN line_item ON ' . self::$_table . '.id_order = line_item.id_order
+				JOIN product ON product.id_product = line_item.id_product'
+			. (!empty($criterias) ? " WHERE " : "");
+
+		$where = array();
+		foreach ($criterias as $name => $value) {
+			$where[] = self::$_table . '.' . $name . " = :" . $name;
+		}
+
+		$sql .= implode(" AND ", $where);
+
+		$stmt = $this->_execute($sql, $criterias)[0];
+		return $stmt->fetchAll();
+	}
 }
