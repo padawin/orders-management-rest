@@ -66,7 +66,7 @@ class Sqlite implements Model
 		. (!empty($where) ? " WHERE " . implode(" AND ", $where) : '');
 
 		$stmt = $this->_execute($sql, $params)[0];
-		return $stmt->rowCount();
+		return array($stmt->rowCount());
 	}
 
 	public function insert(array $values)
@@ -82,7 +82,7 @@ class Sqlite implements Model
 		);
 
 		$stmt = $this->_execute($sql, array_values($values))[0];
-		return self::getConnection()->lastInsertId();
+		return array(self::getConnection()->lastInsertId());
 	}
 
 	public function delete(array $conditions)
