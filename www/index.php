@@ -71,6 +71,10 @@ try {
 			throw new \exceptions\BadRequest;
 	}
 }
+catch (InvalidArgumentException $e) {
+	header("HTTP/1.0 400 Bad Request", true, 400);
+	echo $e->getMessage();
+}
 catch (\exceptions\BadRequest $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo "Bad Request";
