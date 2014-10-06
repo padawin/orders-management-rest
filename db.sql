@@ -13,8 +13,8 @@ CREATE TABLE product (
 	price FLOAT NOT NULL
 );
 
-CREATE TABLE order_item (
-	id_order_item INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE line_item (
+	id_line_item INTEGER PRIMARY KEY AUTOINCREMENT,
 	id_order INTEGER REFERENCES orders(id_order) NOT NULL,
 	id_product INTEGER REFERENCES product(id_product) NOT NULL,
 	quantity INTEGER NOT NULL
