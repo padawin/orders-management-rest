@@ -20,7 +20,9 @@ class Order extends Entity
 		return static::getModel()->get($criterias);
 	}
 
-	public static function updateOrders(array $values = array(), array $conditions = array())
+	public static function updateOrders(
+		array $values = array(), array $conditions = array()
+	)
 	{
 		self::_check($values);
 

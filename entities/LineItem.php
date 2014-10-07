@@ -68,7 +68,10 @@ class LineItem extends Entity
 
 		$quantity = 1;
 		if (isset($values['quantity'])) {
-			if ($values['quantity'] != (int) $values['quantity'] || $values['quantity'] < 1) {
+			if (
+				$values['quantity'] != (int) $values['quantity']
+				|| $values['quantity'] < 1
+			) {
 				$errors['quantity'] = "The quantity must be a positive integer";
 			}
 			else {
