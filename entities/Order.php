@@ -23,6 +23,17 @@ class Order extends Entity
 	public static function updateOrders(array $values = array(), array $conditions = array())
 	{
 		self::_check($values);
+
+		$orders = self::getOrders($conditions);
+		if (empty($orders)) {
+			throw new \InvalidArgumentException("No order to update found");
+		}
+
+		if (isset($values['status'])) {
+			foreach ($orders as $order) {
+				self::_checkStatus($values, $order);
+			}
+		}
 		return array(static::getModel()->update($values, $conditions));
 	}
 
@@ -62,6 +73,39 @@ class Order extends Entity
 
 		if (!empty($errors)) {
 			throw new \InvalidArgumentException(json_encode($errors));
+		}
+	}
+
+	protected static function _checkStatuses(array $values, array $order)
+	{
+		if (
+			$order['status'] == self::STATUS_DRAFT
+			&& $values['status'] == self::STATUS_PLACED
+			&& !LineItem::existsWithIdOrder($order['id_order'])
+		) {
+			throw new \InvalidArgumentException(
+				"An order can't be placed with no line item"
+			);
+		}
+		else if (
+			(
+				$order['status'] == self::STATUS_DRAFT
+				|| $order['status'] == self::STATUS_PLACED
+			)
+			&& $values['status'] == self::STATUS_CANCELLED
+			&& empty($values['cancel_reason'])
+		) {
+			throw new \InvalidArgumentException(
+				"To cancel an order, a reason must be profided"
+			);
+		}
+		else if (
+			$order['status'] != self::STATUS_PLACED
+			|| $values['status'] != self::STATUS_PAID
+		) {
+			throw new \InvalidArgumentException(
+				"Invalid status change combination"
+			);
 		}
 	}
 

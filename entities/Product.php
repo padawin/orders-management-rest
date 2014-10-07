@@ -32,6 +32,17 @@ class Product extends Entity
 
 	public static function deleteProducts(array $conditions = array())
 	{
+		$products = self::getProducts($conditions);
+		if (empty($products)) {
+			throw new \InvalidArgumentException("No product found");
+		}
+
+		foreach ($products as $product) {
+			if (LineItem::existsWithIdProduct($product['id_product'])) {
+				throw new \exceptions\Conflict("Some products already belong to some orders and can't be deleted");
+			}
+		}
+
 		return static::getModel()->delete($conditions);
 	}
 }
