@@ -1,6 +1,10 @@
 <?php
 namespace Entities;
 
+use \InvalidArgumentException;
+use \Entities\Order;
+use \Entities\Product;
+
 /**
  * Line item's entity class.
  */
@@ -31,7 +35,7 @@ class LineItem extends Entity
 		}
 
 		if (!empty($error)) {
-			throw new \InvalidArgumentException(json_encode($error));
+			throw new InvalidArgumentException(json_encode($error));
 		}
 
 		return static::getModel()->getLineItems($idOrder, $idProduct);
@@ -44,13 +48,13 @@ class LineItem extends Entity
 			$errors['id_order'] = "An id_order is needed to create a line item";
 		}
 		else {
-			$order = \Entities\Order::get(
+			$order = Order::get(
 				array('id_order' => $values['id_order'])
 			);
 			if (count($order) == 0) {
 				$errors['id_order'] = "The id_order is not correct";
 			}
-			else if ($order['status'] != \Entities\Order::STATUS_DRAFT) {
+			else if ($order['status'] != Order::STATUS_DRAFT) {
 				$errors['id_order'] = "An order can be edited only as a DRAFT";
 			}
 		}
@@ -58,7 +62,7 @@ class LineItem extends Entity
 		if (!isset($values['id_product'])) {
 			$errors['id_product'] = "An id_product is needed to create a line item";
 		}
-		else if (!\Entities\Product::existsWithId($values['id_product'])) {
+		else if (!Product::existsWithId($values['id_product'])) {
 			$errors['id_product'] = "The id_product is not correct";
 		}
 
@@ -76,7 +80,7 @@ class LineItem extends Entity
 		}
 
 		if (!empty($errors)) {
-			throw new \InvalidArgumentException(json_encode($errors));
+			throw new InvalidArgumentException(json_encode($errors));
 		}
 
 		return static::getModel()->insert(
@@ -95,8 +99,8 @@ class LineItem extends Entity
 		// @XXX check order
 		$orders = self::getOrders($conditions);
 		foreach ($orders as $order) {
-			if ($order['status'] != \Entities\Order::STATUS_DRAFT) {
-				throw new \InvalidArgumentException(
+			if ($order['status'] != Order::STATUS_DRAFT) {
+				throw new InvalidArgumentException(
 					"An order can be edited only as a DRAFT"
 				);
 			}
@@ -112,26 +116,26 @@ class LineItem extends Entity
 			$errors['id_order'] = "An id_order is needed to delete a line item";
 		}
 		else {
-			$order = \Entities\Order::get(
+			$order = Order::get(
 				array('id_order' => $values['id_order'])
 			);
 			if (count($order) == 0) {
 				$errors['id_order'] = "The id_order is not correct";
 			}
-			else if ($order['status'] != \Entities\Order::STATUS_DRAFT) {
+			else if ($order['status'] != Order::STATUS_DRAFT) {
 				$errors['id_order'] = "An order can be edited only as a DRAFT";
 			}
 		}
 
 		if (
 			isset($conditions['id_product'])
-			&& !\Entities\Order::existsWithId($conditions['id_product'])
+			&& !Order::existsWithId($conditions['id_product'])
 		) {
 			$errors['id_product'] = "The id_product is not correct";
 		}
 
 		if (!empty($errors)) {
-			throw new \InvalidArgumentException(json_encode($errors));
+			throw new InvalidArgumentException(json_encode($errors));
 		}
 
 		return array(static::getModel()->delete($conditions));

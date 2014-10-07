@@ -1,5 +1,10 @@
 <?php
 
+use \Exceptions\MethodNotAllowed;
+use \Exceptions\Conflict;
+use \Exceptions\BadRequest;
+use \Exceptions\Duplicate;
+
 function __autoload($class)
 {
 	$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
@@ -71,23 +76,23 @@ catch (InvalidArgumentException $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo $e->getMessage();
 }
-catch (\Exceptions\MethodNotAllowed $e) {
+catch (MethodNotAllowed $e) {
 	header("HTTP/1.0 405 Method not allowed", true, 405);
 	echo $e->getMessage();
 }
-catch (\Exceptions\Conflict $e) {
+catch (Conflict $e) {
 	header("HTTP/1.0 409 Conflict", true, 409);
 	echo $e->getMessage();
 }
-catch (\Exceptions\BadRequest $e) {
+catch (BadRequest $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo "Bad Request";
 }
-catch (\Exceptions\Duplicate $e) {
+catch (Duplicate $e) {
 	header("HTTP/1.0 409 Duplicate content", true, 409);
 	echo "Duplicate content";
 }
-catch (\Exception $e) {
+catch (Exception $e) {
 	var_dump($e);
 	header("HTTP/1.0 500 Internal Server Error", true, 500);
 	echo "Internal Server Error";

@@ -2,31 +2,36 @@
 
 namespace Services;
 
+use \Entities\Product as ProductEntity;
+use \Entities\LineItem;
+use \Models\Product\Sqlite as ProductModel;
+use \Models\LineItem\Sqlite as LineItemModel;
+
 class Product extends Service
 {
 	public function __construct()
 	{
-		\Entities\Product::setModel(new \Models\Product\Sqlite());
-		\Entities\LineItem::setModel(new \Models\LineItem\Sqlite());
+		ProductEntity::setModel(new ProductModel());
+		LineItem::setModel(new LineItemModel());
 	}
 
 	public function get(array $criterias = array())
 	{
-		return \Entities\Product::getProducts($criterias);
+		return ProductEntity::getProducts($criterias);
 	}
 
 	public function put(array $values = array(), array $conditions = array())
 	{
-		return \Entities\Product::updateProducts($values, $conditions);
+		return ProductEntity::updateProducts($values, $conditions);
 	}
 
 	public function post(array $values = array())
 	{
-		return \Entities\Product::addProduct($values);
+		return ProductEntity::addProduct($values);
 	}
 
 	public function delete(array $conditions = array())
 	{
-		return \Entities\Product::deleteProducts($conditions);
+		return ProductEntity::deleteProducts($conditions);
 	}
 }
