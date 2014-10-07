@@ -136,4 +136,16 @@ class LineItem extends Entity
 
 		return array(static::getModel()->delete($conditions));
 	}
+
+	public static function existsWithIdProduct($idProduct)
+	{
+		$lineItems = static::getModel()->get(array('id_product' => $idProduct));
+		return count($lineItems) > 0;
+	}
+
+	public static function existsWithIdOrder($idOrder)
+	{
+		$lineItems = static::getModel()->get(array('id_order' => $idOrder));
+		return count($lineItems) > 0;
+	}
 }
