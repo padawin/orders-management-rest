@@ -26,4 +26,14 @@ class lineItem extends Service
 	{
 		return \entities\LineItem::addLineItem($values);
 	}
+
+	public function put(array $values = array(), array $conditions = array())
+	{
+		return \entities\LineItem::updateLineItems($values, $conditions);
+	}
+
+	public function delete(array $conditions)
+	{
+		return \entities\LineItem::deleteLineItems($conditions);
+	}
 }

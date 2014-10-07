@@ -87,4 +87,65 @@ class LineItem extends Entity
 			)
 		);
 	}
+
+	public static function updateLineItems(
+		array $values = array(), array $conditions = array()
+	)
+	{
+		// @XXX check order
+		$orders = self::getOrders($conditions);
+		foreach ($orders as $order) {
+			if ($order['status'] != \entities\Order::STATUS_DRAFT) {
+				throw new \InvalidArgumentException(
+					"An order can be edited only as a DRAFT"
+				);
+			}
+		}
+
+		return array(static::getModel()->update($values, $conditions));
+	}
+
+	public static function deleteLineItems(array $conditions)
+	{
+		$errors = array();
+		if (!isset($conditions['id_order'])) {
+			$errors['id_order'] = "An id_order is needed to delete a line item";
+		}
+		else {
+			$order = \entities\Order::get(
+				array('id_order' => $values['id_order'])
+			);
+			if (count($order) == 0) {
+				$errors['id_order'] = "The id_order is not correct";
+			}
+			else if ($order['status'] != \entities\Order::STATUS_DRAFT) {
+				$errors['id_order'] = "An order can be edited only as a DRAFT";
+			}
+		}
+
+		if (
+			isset($conditions['id_product'])
+			&& !\entities\Order::existsWithId($conditions['id_product'])
+		) {
+			$errors['id_product'] = "The id_product is not correct";
+		}
+
+		if (!empty($errors)) {
+			throw new \InvalidArgumentException(json_encode($errors));
+		}
+
+		return array(static::getModel()->delete($conditions));
+	}
+
+	public static function existsWithIdProduct($idProduct)
+	{
+		$lineItems = static::getModel()->get(array('id_product' => $idProduct));
+		return count($lineItems) > 0;
+	}
+
+	public static function existsWithIdOrder($idOrder)
+	{
+		$lineItems = static::getModel()->get(array('id_order' => $idOrder));
+		return count($lineItems) > 0;
+	}
 }
