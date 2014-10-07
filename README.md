@@ -110,3 +110,4 @@ http://localhost/orders/?service=product&price=10
 
 - The code should be commented and unit-tested,
 - Some parts of the code should be uniformised (eg. signatures with multiple arguments or arrays for the same kind of objects)
+- The order's cancel reason should not be updatable if the new status is not "CANCELLED"
