@@ -61,8 +61,8 @@ class LineItem extends Entity
 		if (!isset($values['id_product'])) {
 			$errors['id_product'] = "An id_product is needed to create a line item";
 		}
-		else if (!\entities\Order::existsWithId($values['id_order'])) {
-			$errors['id_product'] = "The id_order is not correct";
+		else if (!\entities\Product::existsWithId($values['id_product'])) {
+			$errors['id_product'] = "The id_product is not correct";
 		}
 
 		$quantity = 1;
