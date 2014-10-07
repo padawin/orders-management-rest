@@ -5,6 +5,7 @@ require_once "config.php";
 require_once "Registry.php";
 require_once "exceptions/BadRequest.php";
 require_once "exceptions/Duplicate.php";
+require_once "exceptions/Conflict.php";
 require_once "exceptions/MethodNotAllowed.php";
 
 header('Content-Type: application/json');
@@ -72,6 +73,10 @@ catch (InvalidArgumentException $e) {
 }
 catch (\exceptions\MethodNotAllowed $e) {
 	header("HTTP/1.0 405 Method not allowed", true, 405);
+	echo $e->getMessage();
+}
+catch (\exceptions\Conflict $e) {
+	header("HTTP/1.0 409 Conflict", true, 409);
 	echo $e->getMessage();
 }
 catch (\exceptions\BadRequest $e) {
