@@ -67,6 +67,6 @@ class Order extends Entity
 
 	public static function existsWithId($idOrder)
 	{
-		return count(static::getModel()->get(array('id_order' => $idOrder))) == 1;
+		return static::getModel()->existsWithId($idOrder);
 	}
 }

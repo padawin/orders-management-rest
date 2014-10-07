@@ -36,6 +36,15 @@ class Sqlite extends \models\Sqlite
 
 		$sql .= implode(" AND ", $where);
 
+		$sql .= "
+		GROUP BY
+			orders.id_order,
+			vat,
+			date,
+			status,
+			cancel_reason,
+			date_creation
+		";
 		$stmt = $this->_execute($sql, $criterias)[0];
 		return $stmt->fetchAll();
 	}
