@@ -11,6 +11,9 @@ use \Models\LineItem\Sqlite as LineItemModel;
 
 class LineItem extends Service
 {
+	/**
+	 * Set the needed models to use the LineItem entity
+	 */
 	public function __construct()
 	{
 		Order::setModel(new OrderModel());

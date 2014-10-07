@@ -4,6 +4,10 @@ namespace Services;
 
 use \Exceptions\MethodNotAllowed;
 
+/**
+ * Abstract class which defines the available methods in the whole application.
+ * By default, if a method is not overriden, an exception is thrown.
+ */
 abstract class Service
 {
 	public function get(array $criterias = array())

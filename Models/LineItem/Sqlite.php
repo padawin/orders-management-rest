@@ -7,6 +7,14 @@ class Sqlite extends \Models\Sqlite
 	protected static $_table = 'line_item';
 	protected static $_updatableFields = array('quantity');
 
+	/**
+	 * Fetch the line items from the database according to an order id and a
+	 * product id
+	 *
+	 * @param integer $idOrder
+	 * @param integer $idProduct
+	 * @return array the matching line items
+	 */
 	public function getLineItems($idOrder = null, $idProduct = null)
 	{
 		$sql = "

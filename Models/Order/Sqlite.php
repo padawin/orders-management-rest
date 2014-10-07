@@ -9,6 +9,12 @@ class Sqlite extends \Models\Sqlite
 		'vat', 'date', 'status', 'cancel_reason'
 	);
 
+	/**
+	 * Returns the orders from the database matching $criterias
+	 *
+	 * @param array $criterias
+	 * @return array the matching orders
+	 */
 	public function get(array $criterias = array())
 	{
 		$sql = "
@@ -47,6 +53,12 @@ class Sqlite extends \Models\Sqlite
 		return $stmt->fetchAll();
 	}
 
+	/**
+	 * Checks if an order exists with the provided id.
+	 *
+	 * @param integer $idOrder
+	 * @return boolean True if the order exists
+	 */
 	public function existsWithId($idOrder)
 	{
 		$sql = "

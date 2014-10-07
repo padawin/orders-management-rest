@@ -9,12 +9,32 @@ use \Exceptions\BadRequest;
 use \Exceptions\Duplicate;
 use \Exception;
 
-class Sqlite implements Model
+/**
+ * Abstract class to interact with a Sqlite database
+ */
+abstract class Sqlite implements Model
 {
+	/**
+	 * The table of the child class
+	 */
 	protected static $_table;
+
+	/**
+	 * A PDO connection
+	 */
 	protected static $_connection;
+
+	/**
+	 * The list of fields which can be updated
+	 */
 	protected static $_updatableFields = array();
 
+	/**
+	 * Returns a PDO connection
+	 * Singleton.
+	 *
+	 * @return PDO
+	 */
 	public static function getConnection()
 	{
 		if (self::$_connection == null) {
@@ -26,6 +46,12 @@ class Sqlite implements Model
 		return self::$_connection;
 	}
 
+	/**
+	 * Method to fetch rows from the database
+	 *
+	 * @param array $criterias (Optional) The criterias to fetch the data
+	 * @return array The data matching the criterias
+	 */
 	public function get(array $criterias = array())
 	{
 		$sql = "SELECT * FROM "
@@ -43,6 +69,14 @@ class Sqlite implements Model
 		return $stmt->fetchAll();
 	}
 
+
+	/**
+	 * Method to update rows in the database from some criterias
+	 *
+	 * @param array $values The new values to set
+	 * @param array $criterias (Optional) The criterias to update the data
+	 * @return integer The number of updated rows
+	 */
 	public function update(array $values, array $criterias = array())
 	{
 		$values = array_intersect_key(
@@ -71,6 +105,12 @@ class Sqlite implements Model
 		return $stmt->rowCount();
 	}
 
+	/**
+	 * Insert a new row in the database
+	 *
+	 * @param array $values the row to insert
+	 * @return integer The id of the inserted row
+	 */
 	public function insert(array $values)
 	{
 		if (empty($values)) {
@@ -87,6 +127,12 @@ class Sqlite implements Model
 		return array(self::getConnection()->lastInsertId());
 	}
 
+	/**
+	 * Delete rows from the database.
+	 *
+	 * @param array $conditions The rows to delete must match those conditions
+	 * @return integer The number of deleted rows
+	 */
 	public function delete(array $conditions)
 	{
 		$sql = "DELETE FROM " . static::$_table;
@@ -101,7 +147,15 @@ class Sqlite implements Model
 		return $stmt->rowCount();
 	}
 
-	protected function _execute($sql, $params = array())
+	/**
+	 * Execute a SQL query
+	 *
+	 * @param string $sql
+	 * @param array $params Parameters to bind
+	 * @return a tuple with the executed statement and the result of the
+	 *		statement's execution.
+	 */
+	protected function _execute($sql, array $params = array())
 	{
 		try {
 			$stmt = self::getConnection()->prepare($sql);
