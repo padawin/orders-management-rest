@@ -52,7 +52,7 @@ class Order extends Entity
 				self::_checkStatus($values, $order);
 			}
 		}
-		return array(static::getModel()->update($values, $conditions));
+		return static::getModel()->update($values, $conditions);
 	}
 
 	/**
