@@ -76,6 +76,36 @@ example:
 http://localhost/orders/?service=product&price=10
 ```
 
+## Available Services
+
+- product: To manage products
+- order: To manage orders
+- lineItem: To manage line items
+
+## Available fields per service
+
+### Product
+
+- id_product (not updatable)
+- name (varchar)
+- price (float)
+
+### Order
+
+- id_order (not updatable)
+- vat
+- status
+- cancel_reason
+- date
+- date_creation (not updatable)
+
+### Line item
+
+- id_line_item (not updatable)
+- id_order (not updatable)
+- id_product (not updatable)
+- quantity
+
 ## TODO
 
 - The code should be commented and unit-tested,
