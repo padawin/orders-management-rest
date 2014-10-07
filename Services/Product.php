@@ -8,7 +8,7 @@ require_once "Entities/LineItem.php";
 require_once "Models/Product/Sqlite.php";
 require_once "Models/LineItem/Sqlite.php";
 
-class product extends Service
+class Product extends Service
 {
 	public function __construct()
 	{

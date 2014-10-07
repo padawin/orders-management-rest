@@ -18,7 +18,7 @@ if (!isset($_GET['service'])) {
 }
 
 $method = $_SERVER['REQUEST_METHOD'];
-$service = $_GET['service'];
+$service = ucfirst($_GET['service']);
 $root = Registry::get('root');
 $servicePath = realpath(Registry::get('root') . '/Services/' . $service . '.php');
 

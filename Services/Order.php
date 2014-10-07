@@ -7,7 +7,7 @@ require_once "Entities/Order.php";
 require_once "Models/Order/Sqlite.php";
 require_once "Registry.php";
 
-class order extends Service
+class Order extends Service
 {
 	public function __construct()
 	{
