@@ -1,7 +1,7 @@
 <?php
-namespace entities;
+namespace Entities;
 
-require_once "Entity.php";
+use \InvalidArgumentException;
 
 /**
  * Order's entity class.
@@ -28,7 +28,7 @@ class Order extends Entity
 
 		$orders = self::getOrders($conditions);
 		if (empty($orders)) {
-			throw new \InvalidArgumentException("No order to update found");
+			throw new InvalidArgumentException("No order to update found");
 		}
 
 		if (isset($values['status'])) {
@@ -74,7 +74,7 @@ class Order extends Entity
 		}
 
 		if (!empty($errors)) {
-			throw new \InvalidArgumentException(json_encode($errors));
+			throw new InvalidArgumentException(json_encode($errors));
 		}
 	}
 
@@ -85,7 +85,7 @@ class Order extends Entity
 			&& $values['status'] == self::STATUS_PLACED
 			&& !LineItem::existsWithIdOrder($order['id_order'])
 		) {
-			throw new \InvalidArgumentException(
+			throw new InvalidArgumentException(
 				"An order can't be placed with no line item"
 			);
 		}
@@ -97,7 +97,7 @@ class Order extends Entity
 			&& $values['status'] == self::STATUS_CANCELLED
 			&& empty($values['cancel_reason'])
 		) {
-			throw new \InvalidArgumentException(
+			throw new InvalidArgumentException(
 				"To cancel an order, a reason must be profided"
 			);
 		}
@@ -105,7 +105,7 @@ class Order extends Entity
 			$order['status'] != self::STATUS_PLACED
 			|| $values['status'] != self::STATUS_PAID
 		) {
-			throw new \InvalidArgumentException(
+			throw new InvalidArgumentException(
 				"Invalid status change combination"
 			);
 		}

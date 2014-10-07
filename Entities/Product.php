@@ -1,9 +1,8 @@
 <?php
-namespace entities;
+namespace Entities;
 
-require_once "Entity.php";
-require_once "LineItem.php";
-require_once "exceptions/Conflict.php";
+use \InvalidArgumentException;
+use \Exceptions\Conflict;
 
 /**
  * Product's entity class.
@@ -36,12 +35,12 @@ class Product extends Entity
 	{
 		$products = self::getProducts($conditions);
 		if (empty($products)) {
-			throw new \InvalidArgumentException("No product found");
+			throw new InvalidArgumentException("No product found");
 		}
 
 		foreach ($products as $product) {
 			if (LineItem::existsWithIdProduct($product['id_product'])) {
-				throw new \exceptions\Conflict("Some products already belong to some orders and can't be deleted");
+				throw new Conflict("Some products already belong to some orders and can't be deleted");
 			}
 		}
 

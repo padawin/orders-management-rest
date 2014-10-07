@@ -1,6 +1,9 @@
 <?php
 
-namespace entities;
+namespace Entities;
+
+use \Models\Model;
+use \RuntimeException;
 
 /**
  * Abstract class for the entities. An entity class has a model, to interact
@@ -11,9 +14,9 @@ abstract class Entity
 	/**
 	 * Set the entity's model
 	 *
-	 * @param \models\Model $model
+	 * @param \Models\Model $model
 	 */
-	public static function setModel(\models\Model $model)
+	public static function setModel(Model $model)
 	{
 		static::$_model = $model;
 	}
@@ -27,7 +30,7 @@ abstract class Entity
 	public static function getModel()
 	{
 		if (static::$_model == null) {
-			throw new \RuntimeException("No model set");
+			throw new RuntimeException("No model set");
 		}
 
 		return static::$_model;

@@ -14,6 +14,8 @@ REST Application to manage orders
 ./INSTALL
 ```
 
+Then, in config.php, change the value for the key "root" to define the path to the project.
+
 ## TODO
 
 - The code should be commented and unit-tested,

@@ -2,4 +2,4 @@
 
 [ -d database ] || mkdir database
 sqlite3 -init db.sql database/orders.db '.quit'
-chmod 777 -R database
+chmod 775 -R database

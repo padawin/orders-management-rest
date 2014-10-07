@@ -1,29 +1,28 @@
 <?php
 
-namespace services;
+namespace Services;
 
-require_once "services/Service.php";
-require_once "entities/Order.php";
-require_once "models/Order/Sqlite.php";
-require_once "Registry.php";
+use \Registry;
+use \Entities\Order as OrderEntity;
+use \Model\Order\Sqlite as OrderModel;
 
-class order extends Service
+class Order extends Service
 {
 	public function __construct()
 	{
-		\entities\Order::setModel(new \models\Order\Sqlite());
+		OrderEntity::setModel(new OrderModel());
 	}
 
 	public function get(array $criterias = array())
 	{
-		return \entities\Order::getOrders($criterias);
+		return OrderEntity::getOrders($criterias);
 	}
 
 	public function post(array $criterias = array())
 	{
 		$default = array(
 			'date' => time(),
-			'vat' => \Registry::get('default-vat')
+			'vat' => Registry::get('default-vat')
 		);
 
 		$criterias = array_merge(
@@ -34,7 +33,7 @@ class order extends Service
 			)
 		);
 
-		return \entities\Order::createOrder(
+		return OrderEntity::createOrder(
 			$criterias['date'],
 			$criterias['vat']
 		);
@@ -42,6 +41,6 @@ class order extends Service
 
 	public function put(array $values = array(), array $conditions = array())
 	{
-		return \entities\Order::updateOrders($values, $conditions);
+		return OrderEntity::updateOrders($values, $conditions);
 	}
 }

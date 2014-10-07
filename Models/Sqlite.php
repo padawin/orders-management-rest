@@ -1,11 +1,13 @@
 <?php
 
-namespace models;
+namespace Models;
 
-require_once "models/Model.php";
-require_once "Registry.php";
-require_once "exceptions/BadRequest.php";
-require_once "exceptions/Duplicate.php";
+use \Registry;
+use \PDO;
+use \InvalidArgumentException;
+use \Exceptions\BadRequest;
+use \Exceptions\Duplicate;
+use \Exception;
 
 class Sqlite implements Model
 {
@@ -16,9 +18,9 @@ class Sqlite implements Model
 	public static function getConnection()
 	{
 		if (self::$_connection == null) {
-			self::$_connection = new \PDO('sqlite:' . \Registry::get('root') . '/database/orders.db');
-			self::$_connection->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
-			self::$_connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
+			self::$_connection = new PDO('sqlite:' . Registry::get('root') . '/database/orders.db');
+			self::$_connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+			self::$_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
 		}
 
 		return self::$_connection;
@@ -48,7 +50,7 @@ class Sqlite implements Model
 			array_flip(static::$_updatableFields)
 		);
 		if (empty($values)) {
-			throw new \InvalidArgumentException("No value to update");
+			throw new InvalidArgumentException("No value to update");
 		}
 
 		$sql = "UPDATE " . static::$_table . " SET ";
@@ -72,7 +74,7 @@ class Sqlite implements Model
 	public function insert(array $values)
 	{
 		if (empty($values)) {
-			throw new \exceptions\BadRequest;
+			throw new BadRequest;
 		}
 
 		$sql = sprintf(
@@ -105,12 +107,12 @@ class Sqlite implements Model
 			$stmt = self::getConnection()->prepare($sql);
 			$result = $stmt->execute($params);
 		}
-		catch (\Exception $e) {
+		catch (Exception $e) {
 			switch ((string) $e->getCode()) {
 				case '23000':
-					throw new \exceptions\Duplicate($e->getMessage());
+					throw new Duplicate($e->getMessage());
 				case 'HY000':
-					throw new \exceptions\BadRequest($e->getMessage());
+					throw new BadRequest($e->getMessage());
 				default:
 					throw $e;
 			}

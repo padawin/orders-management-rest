@@ -1,10 +1,8 @@
 <?php
 
-namespace models\Order;
+namespace Models\Order;
 
-require_once "models/Sqlite.php";
-
-class Sqlite extends \models\Sqlite
+class Sqlite extends \Models\Sqlite
 {
 	protected static $_table = 'orders';
 	protected static $_updatableFields = array(

@@ -1,10 +1,8 @@
 <?php
 
-namespace models\LineItem;
+namespace Models\LineItem;
 
-require_once "models/Sqlite.php";
-
-class Sqlite extends \models\Sqlite
+class Sqlite extends \Models\Sqlite
 {
 	protected static $_table = 'line_item';
 	protected static $_updatableFields = array('quantity');
