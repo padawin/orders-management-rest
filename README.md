@@ -1,6 +1,7 @@
 # Order management
 
 REST Application to manage orders
+An order is linked to products through line items.
 
 ## Requirements
 
