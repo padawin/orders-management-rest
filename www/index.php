@@ -47,7 +47,7 @@ try {
 		case 'POST':
 			$criterias = $_GET;
 			unset($criterias['service']);
-			echo json_encode($service->post($criterias));
+			echo json_encode(array($service->post($criterias)));
 			break;
 		case 'PUT':
 			$values = json_decode(isset($_GET['values']) ? $_GET['values'] : '', true);
@@ -60,13 +60,13 @@ try {
 				throw new \InvalidArgumentException("The conditions and values must be valid JSON values");
 			}
 
-			echo json_encode($service->put($values, $conditions));
+			echo json_encode(array($service->put($values, $conditions)));
 			break;
 		case 'DELETE':
 			$conditions = $_GET;
 			unset($conditions['service']);
 
-			echo json_encode($service->delete($conditions));
+			echo json_encode(array($service->delete($conditions)));
 			break;
 		default:
 			throw new \Exceptions\MethodNotAllowed("The requested method does not exist");

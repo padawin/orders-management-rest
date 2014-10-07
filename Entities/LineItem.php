@@ -138,7 +138,7 @@ class LineItem extends Entity
 			}
 		}
 
-		return array(static::getModel()->update($values, $conditions));
+		return static::getModel()->update($values, $conditions);
 	}
 
 	/**
@@ -183,7 +183,7 @@ class LineItem extends Entity
 			throw new InvalidArgumentException(json_encode($errors));
 		}
 
-		return array(static::getModel()->delete($conditions));
+		return static::getModel()->delete($conditions);
 	}
 
 	/**

@@ -43,7 +43,7 @@ class Product extends Entity
 	 */
 	public static function updateProducts(array $values = array(), array $conditions = array())
 	{
-		return array(static::getModel()->update($values, $conditions));
+		return static::getModel()->update($values, $conditions);
 	}
 
 	/**
