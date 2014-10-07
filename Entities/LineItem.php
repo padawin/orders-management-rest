@@ -167,13 +167,14 @@ class LineItem extends Entity
 				$errors['id_order'] = "The id_order is not correct";
 			}
 			else if ($order['status'] != Order::STATUS_DRAFT) {
-				$errors['id_order'] = "An order can be edited only as a DRAFT";
+				$errors['id_order'] = "An order's line item can be deleted "
+					. "only DRAFT orders";
 			}
 		}
 
 		if (
 			isset($conditions['id_product'])
-			&& !Order::existsWithId($conditions['id_product'])
+			&& !Product::existsWithId($conditions['id_product'])
 		) {
 			$errors['id_product'] = "The id_product is not correct";
 		}
