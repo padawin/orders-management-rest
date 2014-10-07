@@ -39,4 +39,18 @@ class Sqlite extends \models\Sqlite
 		$stmt = $this->_execute($sql, $criterias)[0];
 		return $stmt->fetchAll();
 	}
+
+	public function existsWithId($idOrder)
+	{
+		$sql = "
+			SELECT
+				COUNT(1) AS count
+			FROM "
+				. self::$_table
+			. ' WHERE id_order = ?';
+
+		$stmt = $this->_execute($sql, array($idOrder))[0];
+		$res = $stmt->fetchAll();
+		return $res[0]['count'] > 0;
+	}
 }
