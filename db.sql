@@ -17,5 +17,6 @@ CREATE TABLE line_item (
 	id_line_item INTEGER PRIMARY KEY AUTOINCREMENT,
 	id_order INTEGER REFERENCES orders(id_order) NOT NULL,
 	id_product INTEGER REFERENCES product(id_product) NOT NULL,
-	quantity INTEGER NOT NULL
+	quantity INTEGER NOT NULL,
+	UNIQUE (id_order, id_product)
 );

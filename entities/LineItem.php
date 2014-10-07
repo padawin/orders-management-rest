@@ -48,14 +48,15 @@ class LineItem extends Entity
 			$errors['id_order'] = "An id_order is needed to create a line item";
 		}
 		else {
-			$order = \entities\Order::getOrders(
+			$order = \entities\Order::get(
 				array('id_order' => $values['id_order'])
 			);
-
-			if (count($order) != 1) {
+			if (count($order) == 0) {
 				$errors['id_order'] = "The id_order is not correct";
 			}
-			unset($order);
+			else if ($order['status'] != \entities\Order::STATUS_DRAFT) {
+				$errors['id_order'] = "An order can be edited only as a DRAFT";
+			}
 		}
 
 		if (!isset($values['id_product'])) {

@@ -66,7 +66,7 @@ class Sqlite implements Model
 		. (!empty($where) ? " WHERE " . implode(" AND ", $where) : '');
 
 		$stmt = $this->_execute($sql, $params)[0];
-		return array($stmt->rowCount());
+		return $stmt->rowCount();
 	}
 
 	public function insert(array $values)

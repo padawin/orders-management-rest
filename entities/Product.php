@@ -2,6 +2,8 @@
 namespace entities;
 
 require_once "Entity.php";
+require_once "LineItem.php";
+require_once "exceptions/Conflict.php";
 
 /**
  * Product's entity class.
