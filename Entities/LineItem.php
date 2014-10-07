@@ -174,7 +174,7 @@ class LineItem extends Entity
 
 		if (
 			isset($conditions['id_product'])
-			&& !Order::existsWithId($conditions['id_product'])
+			&& !Product::existsWithId($conditions['id_product'])
 		) {
 			$errors['id_product'] = "The id_product is not correct";
 		}
