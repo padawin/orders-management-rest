@@ -76,7 +76,7 @@ catch (InvalidArgumentException $e) {
 	echo $e->getMessage();
 }
 catch (\exceptions\MethodNotAllowed $e) {
-	header("HTTP/1.0 405 Method not allowed Request", true, 400);
+	header("HTTP/1.0 405 Method not allowed", true, 405);
 	echo $e->getMessage();
 }
 catch (\exceptions\BadRequest $e) {
@@ -84,11 +84,11 @@ catch (\exceptions\BadRequest $e) {
 	echo "Bad Request";
 }
 catch (\exceptions\Duplicate $e) {
-	header("HTTP/1.0 409 Duplicate content", true, 400);
+	header("HTTP/1.0 409 Duplicate content", true, 409);
 	echo "Duplicate content";
 }
 catch (\Exception $e) {
 	var_dump($e);
-	header("HTTP/1.0 500 Internal Server Error");
+	header("HTTP/1.0 500 Internal Server Error", true, 500);
 	echo "Internal Server Error";
 }
