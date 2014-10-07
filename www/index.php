@@ -64,7 +64,7 @@ try {
 			echo json_encode($service->delete($conditions));
 			break;
 		default:
-			throw new \exceptions\BadRequest;
+			throw new \exceptions\MethodNotAllowed("The requested method does not exist");
 	}
 }
 catch (InvalidArgumentException $e) {
