@@ -1,6 +1,6 @@
 <?php
 
-namespace entities;
+namespace Entities;
 
 /**
  * Abstract class for the entities. An entity class has a model, to interact
@@ -11,9 +11,9 @@ abstract class Entity
 	/**
 	 * Set the entity's model
 	 *
-	 * @param \models\Model $model
+	 * @param \Models\Model $model
 	 */
-	public static function setModel(\models\Model $model)
+	public static function setModel(\Models\Model $model)
 	{
 		static::$_model = $model;
 	}

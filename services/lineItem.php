@@ -1,6 +1,6 @@
 <?php
 
-namespace services;
+namespace Services;
 
 require_once "services/Service.php";
 require_once "entities/LineItem.php";
@@ -12,28 +12,28 @@ class lineItem extends Service
 {
 	public function __construct()
 	{
-		\entities\Order::setModel(new \models\Order\Sqlite());
-		\entities\Product::setModel(new \models\Product\Sqlite());
-		\entities\LineItem::setModel(new \models\LineItem\Sqlite());
+		\Entities\Order::setModel(new \Models\Order\Sqlite());
+		\Entities\Product::setModel(new \Models\Product\Sqlite());
+		\Entities\LineItem::setModel(new \Models\LineItem\Sqlite());
 	}
 
 	public function get(array $criterias = array())
 	{
-		return \entities\LineItem::getLineItems($criterias);
+		return \Entities\LineItem::getLineItems($criterias);
 	}
 
 	public function post(array $values)
 	{
-		return \entities\LineItem::addLineItem($values);
+		return \Entities\LineItem::addLineItem($values);
 	}
 
 	public function put(array $values = array(), array $conditions = array())
 	{
-		return \entities\LineItem::updateLineItems($values, $conditions);
+		return \Entities\LineItem::updateLineItems($values, $conditions);
 	}
 
 	public function delete(array $conditions)
 	{
-		return \entities\LineItem::deleteLineItems($conditions);
+		return \Entities\LineItem::deleteLineItems($conditions);
 	}
 }

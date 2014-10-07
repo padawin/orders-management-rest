@@ -30,7 +30,7 @@ if (!$servicePath || strpos($servicePath, $root . '/services/') != 0) {
 }
 
 require $servicePath;
-$serviceClass = "\services\\" . $service;
+$serviceClass = "\Services\\" . $service;
 $service = new $serviceClass();
 try {
 	switch ($method) {
@@ -64,26 +64,26 @@ try {
 			echo json_encode($service->delete($conditions));
 			break;
 		default:
-			throw new \exceptions\MethodNotAllowed("The requested method does not exist");
+			throw new \Exceptions\MethodNotAllowed("The requested method does not exist");
 	}
 }
 catch (InvalidArgumentException $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo $e->getMessage();
 }
-catch (\exceptions\MethodNotAllowed $e) {
+catch (\Exceptions\MethodNotAllowed $e) {
 	header("HTTP/1.0 405 Method not allowed", true, 405);
 	echo $e->getMessage();
 }
-catch (\exceptions\Conflict $e) {
+catch (\Exceptions\Conflict $e) {
 	header("HTTP/1.0 409 Conflict", true, 409);
 	echo $e->getMessage();
 }
-catch (\exceptions\BadRequest $e) {
+catch (\Exceptions\BadRequest $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo "Bad Request";
 }
-catch (\exceptions\Duplicate $e) {
+catch (\Exceptions\Duplicate $e) {
 	header("HTTP/1.0 409 Duplicate content", true, 409);
 	echo "Duplicate content";
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace models;
+namespace Models;
 
 require_once "models/Model.php";
 require_once "Registry.php";
@@ -72,7 +72,7 @@ class Sqlite implements Model
 	public function insert(array $values)
 	{
 		if (empty($values)) {
-			throw new \exceptions\BadRequest;
+			throw new \Exceptions\BadRequest;
 		}
 
 		$sql = sprintf(
@@ -108,9 +108,9 @@ class Sqlite implements Model
 		catch (\Exception $e) {
 			switch ((string) $e->getCode()) {
 				case '23000':
-					throw new \exceptions\Duplicate($e->getMessage());
+					throw new \Exceptions\Duplicate($e->getMessage());
 				case 'HY000':
-					throw new \exceptions\BadRequest($e->getMessage());
+					throw new \Exceptions\BadRequest($e->getMessage());
 				default:
 					throw $e;
 			}

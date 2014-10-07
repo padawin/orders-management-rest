@@ -1,5 +1,5 @@
 <?php
-namespace entities;
+namespace Entities;
 
 require_once "Entity.php";
 require_once "LineItem.php";
@@ -41,7 +41,7 @@ class Product extends Entity
 
 		foreach ($products as $product) {
 			if (LineItem::existsWithIdProduct($product['id_product'])) {
-				throw new \exceptions\Conflict("Some products already belong to some orders and can't be deleted");
+				throw new \Exceptions\Conflict("Some products already belong to some orders and can't be deleted");
 			}
 		}
 

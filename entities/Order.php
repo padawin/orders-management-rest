@@ -1,5 +1,5 @@
 <?php
-namespace entities;
+namespace Entities;
 
 require_once "Entity.php";
 

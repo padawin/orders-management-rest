@@ -1,6 +1,6 @@
 <?php
 
-namespace services;
+namespace Services;
 
 require_once "services/Service.php";
 require_once "entities/Order.php";
@@ -11,12 +11,12 @@ class order extends Service
 {
 	public function __construct()
 	{
-		\entities\Order::setModel(new \models\Order\Sqlite());
+		\Entities\Order::setModel(new \Models\Order\Sqlite());
 	}
 
 	public function get(array $criterias = array())
 	{
-		return \entities\Order::getOrders($criterias);
+		return \Entities\Order::getOrders($criterias);
 	}
 
 	public function post(array $criterias = array())
@@ -34,7 +34,7 @@ class order extends Service
 			)
 		);
 
-		return \entities\Order::createOrder(
+		return \Entities\Order::createOrder(
 			$criterias['date'],
 			$criterias['vat']
 		);
@@ -42,6 +42,6 @@ class order extends Service
 
 	public function put(array $values = array(), array $conditions = array())
 	{
-		return \entities\Order::updateOrders($values, $conditions);
+		return \Entities\Order::updateOrders($values, $conditions);
 	}
 }

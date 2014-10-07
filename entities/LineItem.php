@@ -1,5 +1,5 @@
 <?php
-namespace entities;
+namespace Entities;
 
 require_once "Entity.php";
 require_once "Order.php";
@@ -48,13 +48,13 @@ class LineItem extends Entity
 			$errors['id_order'] = "An id_order is needed to create a line item";
 		}
 		else {
-			$order = \entities\Order::get(
+			$order = \Entities\Order::get(
 				array('id_order' => $values['id_order'])
 			);
 			if (count($order) == 0) {
 				$errors['id_order'] = "The id_order is not correct";
 			}
-			else if ($order['status'] != \entities\Order::STATUS_DRAFT) {
+			else if ($order['status'] != \Entities\Order::STATUS_DRAFT) {
 				$errors['id_order'] = "An order can be edited only as a DRAFT";
 			}
 		}
@@ -62,7 +62,7 @@ class LineItem extends Entity
 		if (!isset($values['id_product'])) {
 			$errors['id_product'] = "An id_product is needed to create a line item";
 		}
-		else if (!\entities\Product::existsWithId($values['id_product'])) {
+		else if (!\Entities\Product::existsWithId($values['id_product'])) {
 			$errors['id_product'] = "The id_product is not correct";
 		}
 
@@ -99,7 +99,7 @@ class LineItem extends Entity
 		// @XXX check order
 		$orders = self::getOrders($conditions);
 		foreach ($orders as $order) {
-			if ($order['status'] != \entities\Order::STATUS_DRAFT) {
+			if ($order['status'] != \Entities\Order::STATUS_DRAFT) {
 				throw new \InvalidArgumentException(
 					"An order can be edited only as a DRAFT"
 				);
@@ -116,20 +116,20 @@ class LineItem extends Entity
 			$errors['id_order'] = "An id_order is needed to delete a line item";
 		}
 		else {
-			$order = \entities\Order::get(
+			$order = \Entities\Order::get(
 				array('id_order' => $values['id_order'])
 			);
 			if (count($order) == 0) {
 				$errors['id_order'] = "The id_order is not correct";
 			}
-			else if ($order['status'] != \entities\Order::STATUS_DRAFT) {
+			else if ($order['status'] != \Entities\Order::STATUS_DRAFT) {
 				$errors['id_order'] = "An order can be edited only as a DRAFT";
 			}
 		}
 
 		if (
 			isset($conditions['id_product'])
-			&& !\entities\Order::existsWithId($conditions['id_product'])
+			&& !\Entities\Order::existsWithId($conditions['id_product'])
 		) {
 			$errors['id_product'] = "The id_product is not correct";
 		}
