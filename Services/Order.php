@@ -2,11 +2,6 @@
 
 namespace Services;
 
-require_once "services/Service.php";
-require_once "Entities/Order.php";
-require_once "Models/Order/Sqlite.php";
-require_once "Registry.php";
-
 class Order extends Service
 {
 	public function __construct()

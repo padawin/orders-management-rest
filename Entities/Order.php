@@ -1,8 +1,6 @@
 <?php
 namespace Entities;
 
-require_once "Entity.php";
-
 /**
  * Order's entity class.
  */

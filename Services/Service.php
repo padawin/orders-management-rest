@@ -2,8 +2,6 @@
 
 namespace Services;
 
-require_once "Exceptions/MethodNotAllowed.php";
-
 abstract class Service
 {
 	public function get(array $criterias = array())

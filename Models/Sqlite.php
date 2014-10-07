@@ -2,11 +2,6 @@
 
 namespace Models;
 
-require_once "Models/Model.php";
-require_once "Registry.php";
-require_once "Exceptions/BadRequest.php";
-require_once "Exceptions/Duplicate.php";
-
 class Sqlite implements Model
 {
 	protected static $_table;

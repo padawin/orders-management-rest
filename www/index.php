@@ -1,12 +1,13 @@
 <?php
 
+function __autoload($class)
+{
+	$path = str_replace('\\', DIRECTORY_SEPARATOR, $class);
+	require_once($path . '.php');
+}
+
 set_include_path(realpath('../') . PATH_SEPARATOR . get_include_path());
 require_once "config.php";
-require_once "Registry.php";
-require_once "Exceptions/BadRequest.php";
-require_once "Exceptions/Duplicate.php";
-require_once "Exceptions/Conflict.php";
-require_once "Exceptions/MethodNotAllowed.php";
 
 header('Content-Type: application/json');
 
@@ -29,7 +30,6 @@ if (!$servicePath || strpos($servicePath, $root . '/Services/') != 0) {
 	exit(1);
 }
 
-require $servicePath;
 $serviceClass = "\Services\\" . $service;
 $service = new $serviceClass();
 try {

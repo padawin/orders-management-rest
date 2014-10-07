@@ -2,12 +2,6 @@
 
 namespace Services;
 
-require_once "services/Service.php";
-require_once "Entities/LineItem.php";
-require_once "Models/LineItem/Sqlite.php";
-require_once "Models/Order/Sqlite.php";
-require_once "Models/Product/Sqlite.php";
-
 class LineItem extends Service
 {
 	public function __construct()

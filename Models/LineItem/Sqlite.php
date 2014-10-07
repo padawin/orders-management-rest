@@ -2,8 +2,6 @@
 
 namespace Models\LineItem;
 
-require_once "Models/Sqlite.php";
-
 class Sqlite extends \Models\Sqlite
 {
 	protected static $_table = 'line_item';

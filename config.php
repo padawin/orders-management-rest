@@ -1,7 +1,5 @@
 <?php
 
-require_once "Registry.php";
-
 $config = array(
 	'root' => '/path/to/the/project/root',
 	'default-vat' => .2

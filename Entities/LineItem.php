@@ -1,10 +1,6 @@
 <?php
 namespace Entities;
 
-require_once "Entity.php";
-require_once "Order.php";
-require_once "Product.php";
-
 /**
  * Line item's entity class.
  */
