@@ -27,7 +27,7 @@ abstract class Service
 		);
 	}
 
-	public function delete($id)
+	public function delete(array $conditions = array())
 	{
 		throw new \exceptions\MethodNotAllowed(
 			"Delete method is not allowed for this service"

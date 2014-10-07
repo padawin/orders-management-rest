@@ -5,6 +5,8 @@ require_once "config.php";
 require_once "Registry.php";
 require_once "exceptions/BadRequest.php";
 require_once "exceptions/Duplicate.php";
+require_once "exceptions/Conflict.php";
+require_once "exceptions/MethodNotAllowed.php";
 
 header('Content-Type: application/json');
 
@@ -50,20 +52,14 @@ try {
 			}
 
 			if (empty($values) || $conditions === false) {
-				throw new \exceptions\BadRequest;
+				throw new \InvalidArgumentException("The conditions and values must be valid JSON values");
 			}
 
 			echo json_encode($service->put($values, $conditions));
 			break;
 		case 'DELETE':
-			$conditions = array();
-			if (isset($_GET['conditions'])) {
-				$conditions = json_decode($_GET['conditions'], true);
-			}
-
-			if ($conditions === false) {
-				throw new \exceptions\BadRequest;
-			}
+			$conditions = $_GET;
+			unset($conditions['service']);
 
 			echo json_encode($service->delete($conditions));
 			break;
@@ -77,6 +73,10 @@ catch (InvalidArgumentException $e) {
 }
 catch (\exceptions\MethodNotAllowed $e) {
 	header("HTTP/1.0 405 Method not allowed", true, 405);
+	echo $e->getMessage();
+}
+catch (\exceptions\Conflict $e) {
+	header("HTTP/1.0 409 Conflict", true, 409);
 	echo $e->getMessage();
 }
 catch (\exceptions\BadRequest $e) {
