@@ -8,6 +8,9 @@ use \Model\Order\Sqlite as OrderModel;
 
 class Order extends Service
 {
+	/**
+	 * Set the needed models to use the Order entity
+	 */
 	public function __construct()
 	{
 		OrderEntity::setModel(new OrderModel());
@@ -18,6 +21,13 @@ class Order extends Service
 		return OrderEntity::getOrders($criterias);
 	}
 
+	/**
+	 * Creates a new order. The default date is the current date and the
+	 * default VAT is in the configuration, stored in the Registry
+	 *
+	 * @param array $criterias Values of the order to save
+	 * @return the id of the inserted order
+	 */
 	public function post(array $criterias = array())
 	{
 		$default = array(

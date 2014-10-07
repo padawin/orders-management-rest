@@ -9,6 +9,9 @@ use \Models\LineItem\Sqlite as LineItemModel;
 
 class Product extends Service
 {
+	/**
+	 * Set the needed models to use the Product entity
+	 */
 	public function __construct()
 	{
 		ProductEntity::setModel(new ProductModel());

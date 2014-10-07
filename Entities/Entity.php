@@ -8,6 +8,9 @@ use \RuntimeException;
 /**
  * Abstract class for the entities. An entity class has a model, to interact
  * with a storage (Sql or NoSql database, memory....)
+ *
+ * In general, the data (input) integrity will be checked in the entities's
+ * methods
  */
 abstract class Entity
 {
