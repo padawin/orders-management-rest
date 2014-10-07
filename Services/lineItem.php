@@ -3,10 +3,10 @@
 namespace Services;
 
 require_once "services/Service.php";
-require_once "entities/LineItem.php";
-require_once "models/LineItem/Sqlite.php";
-require_once "models/Order/Sqlite.php";
-require_once "models/Product/Sqlite.php";
+require_once "Entities/LineItem.php";
+require_once "Models/LineItem/Sqlite.php";
+require_once "Models/Order/Sqlite.php";
+require_once "Models/Product/Sqlite.php";
 
 class lineItem extends Service
 {

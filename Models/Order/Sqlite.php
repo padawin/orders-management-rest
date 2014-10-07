@@ -2,7 +2,7 @@
 
 namespace Models\Order;
 
-require_once "models/Sqlite.php";
+require_once "Models/Sqlite.php";
 
 class Sqlite extends \Models\Sqlite
 {

@@ -3,10 +3,10 @@
 set_include_path(realpath('../') . PATH_SEPARATOR . get_include_path());
 require_once "config.php";
 require_once "Registry.php";
-require_once "exceptions/BadRequest.php";
-require_once "exceptions/Duplicate.php";
-require_once "exceptions/Conflict.php";
-require_once "exceptions/MethodNotAllowed.php";
+require_once "Exceptions/BadRequest.php";
+require_once "Exceptions/Duplicate.php";
+require_once "Exceptions/Conflict.php";
+require_once "Exceptions/MethodNotAllowed.php";
 
 header('Content-Type: application/json');
 
@@ -20,10 +20,10 @@ if (!isset($_GET['service'])) {
 $method = $_SERVER['REQUEST_METHOD'];
 $service = $_GET['service'];
 $root = Registry::get('root');
-$servicePath = realpath(Registry::get('root') . '/services/' . $service . '.php');
+$servicePath = realpath(Registry::get('root') . '/Services/' . $service . '.php');
 
 // unexisting service
-if (!$servicePath || strpos($servicePath, $root . '/services/') != 0) {
+if (!$servicePath || strpos($servicePath, $root . '/Services/') != 0) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
 	echo "Bad Request";
 	exit(1);

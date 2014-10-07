@@ -2,7 +2,7 @@
 
 namespace Services;
 
-require_once "exceptions/MethodNotAllowed.php";
+require_once "Exceptions/MethodNotAllowed.php";
 
 abstract class Service
 {

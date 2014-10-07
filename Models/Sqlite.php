@@ -2,10 +2,10 @@
 
 namespace Models;
 
-require_once "models/Model.php";
+require_once "Models/Model.php";
 require_once "Registry.php";
-require_once "exceptions/BadRequest.php";
-require_once "exceptions/Duplicate.php";
+require_once "Exceptions/BadRequest.php";
+require_once "Exceptions/Duplicate.php";
 
 class Sqlite implements Model
 {

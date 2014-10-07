@@ -3,8 +3,8 @@
 namespace Services;
 
 require_once "services/Service.php";
-require_once "entities/Order.php";
-require_once "models/Order/Sqlite.php";
+require_once "Entities/Order.php";
+require_once "Models/Order/Sqlite.php";
 require_once "Registry.php";
 
 class order extends Service
