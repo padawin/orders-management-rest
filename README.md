@@ -106,8 +106,14 @@ http://localhost/orders/?service=Product&price=10
 - id_product (not updatable)
 - quantity
 
+## Run the tests
+
+```
+php tests.php
+```
+
 ## TODO
 
-- The code should be commented and unit-tested,
+- The checks in the entities should be factorised
 - Some parts of the code should be uniformised (eg. signatures with multiple arguments or arrays for the same kind of objects)
 - The order's cancel reason should not be updatable if the new status is not "CANCELLED"
