@@ -29,8 +29,8 @@ class Sqlite extends \Models\Sqlite
 				SUM(price * quantity) + SUM(price * quantity) * vat AS gross_price
 			FROM "
 				. self::$_table
-				. ' JOIN line_item ON ' . self::$_table . '.id_order = line_item.id_order
-				JOIN product ON product.id_product = line_item.id_product'
+				. ' LEFT JOIN line_item ON ' . self::$_table . '.id_order = line_item.id_order
+				LEFT JOIN product ON product.id_product = line_item.id_product'
 			. (!empty($criterias) ? " WHERE " : "");
 
 		$where = array();
