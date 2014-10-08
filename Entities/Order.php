@@ -47,11 +47,10 @@ class Order extends Entity
 			throw new InvalidArgumentException("No order to update found");
 		}
 
-		if (isset($values['status'])) {
-			foreach ($orders as $order) {
-				self::_checkStatus($values, $order);
-			}
+		foreach ($orders as $order) {
+			self::_checkStatuses($values, $order);
 		}
+
 		return static::getModel()->update($values, $conditions);
 	}
 
@@ -85,23 +84,23 @@ class Order extends Entity
 	 */
 	protected static function _check(array $values)
 	{
-		$error = array();
+		$errors = array();
 		if (
 			isset($values['vat'])
 			&& (
-				!is_float($values['vat'])
-				|| !is_int($values['vat'])
+				!is_double($values['vat'])
+				&& !is_int($values['vat'])
 			)
 		) {
-			$error['vat'] = "The vat must be an integer or a float";
+			$errors['vat'] = "The vat must be an integer or a float";
 		}
 
 		if (isset($values['date'])) {
 			if (!is_int($values['date'])) {
-				$error['date'] = "The order date must be a valid timestamp";
+				$errors['date'] = "The order date must be a valid timestamp";
 			}
 			else if (time() > $values['date']) {
-				$error['date'] = "The order date must not be in the past";
+				$errors['date'] = "The order date must not be in the past";
 			}
 		}
 
@@ -129,33 +128,45 @@ class Order extends Entity
 	protected static function _checkStatuses(array $values, array $order)
 	{
 		if (
-			$order['status'] == self::STATUS_DRAFT
-			&& $values['status'] == self::STATUS_PLACED
-			&& !LineItem::existsWithIdOrder($order['id_order'])
+			$order['status'] != self::STATUS_DRAFT
+			&& isset($values['vat'])
 		) {
 			throw new InvalidArgumentException(
-				"An order can't be placed with no line item"
+			    "The vat can not be changed for a non draft order"
 			);
 		}
-		else if (
-			(
+		else if (isset($values['status'])) {
+			if (
 				$order['status'] == self::STATUS_DRAFT
-				|| $order['status'] == self::STATUS_PLACED
-			)
-			&& $values['status'] == self::STATUS_CANCELLED
-			&& empty($values['cancel_reason'])
-		) {
-			throw new InvalidArgumentException(
-				"To cancel an order, a reason must be profided"
-			);
-		}
-		else if (
-			$order['status'] != self::STATUS_PLACED
-			|| $values['status'] != self::STATUS_PAID
-		) {
-			throw new InvalidArgumentException(
-				"Invalid status change combination"
-			);
+				&& $values['status'] == self::STATUS_PLACED
+			) {
+				if (!LineItem::existsWithIdOrder($order['id_order'])) {
+					throw new InvalidArgumentException(
+						"An order can't be placed with no line item"
+					);
+				}
+			}
+			else if (
+				(
+					$order['status'] == self::STATUS_DRAFT
+					|| $order['status'] == self::STATUS_PLACED
+				)
+				&& $values['status'] == self::STATUS_CANCELLED
+			) {
+				if (empty($values['cancel_reason'])) {
+					throw new InvalidArgumentException(
+						"To cancel an order, a reason must be profided"
+					);
+				}
+			}
+			else if (
+				!($order['status'] == self::STATUS_PLACED
+					&& $values['status'] == self::STATUS_PAID)
+			) {
+				throw new InvalidArgumentException(
+					"Invalid status change combination"
+				);
+			}
 		}
 	}
 

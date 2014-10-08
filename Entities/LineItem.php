@@ -7,7 +7,7 @@ use \Entities\Product;
 
 /**
  * Line item's entity class.
- * @TODO factorise the different checks?
+ * @TODO factorise the different checks
  */
 class LineItem extends Entity
 {
@@ -71,9 +71,9 @@ class LineItem extends Entity
 			$errors['id_order'] = "An id_order is needed to create a line item";
 		}
 		else {
-			$order = Order::get(
+			$order = Order::getOrders(
 				array('id_order' => $values['id_order'])
-			);
+			)[0];
 			if (count($order) == 0) {
 				$errors['id_order'] = "The id_order is not correct";
 			}
@@ -129,13 +129,30 @@ class LineItem extends Entity
 		array $values = array(), array $conditions = array()
 	)
 	{
-		$orders = self::getOrders($conditions);
-		foreach ($orders as $order) {
+		$lineItems = self::getLineItems($conditions);
+		foreach ($lineItems as $li) {
+			$order = Order::getOrders(array("id_order" => $li['id_order']))[0];
 			if ($order['status'] != Order::STATUS_DRAFT) {
 				throw new InvalidArgumentException(
 					"An order can be edited only as a DRAFT"
 				);
 			}
+		}
+
+		if (isset($values['quantity'])) {
+			if (
+				$values['quantity'] != (int) $values['quantity']
+				|| $values['quantity'] < 1
+			) {
+				$errors['quantity'] = "The quantity must be a positive integer";
+			}
+			else {
+				$quantity = $values['quantity'];
+			}
+		}
+
+		if (!empty($errors)) {
+			throw new InvalidArgumentException(json_encode($errors));
 		}
 
 		return static::getModel()->update($values, $conditions);
@@ -160,13 +177,13 @@ class LineItem extends Entity
 			$errors['id_order'] = "An id_order is needed to delete a line item";
 		}
 		else {
-			$order = Order::get(
-				array('id_order' => $values['id_order'])
+			$order = Order::getOrders(
+				array('id_order' => $conditions['id_order'])
 			);
 			if (count($order) == 0) {
 				$errors['id_order'] = "The id_order is not correct";
 			}
-			else if ($order['status'] != Order::STATUS_DRAFT) {
+			else if ($order[0]['status'] != Order::STATUS_DRAFT) {
 				$errors['id_order'] = "An order's line item can be deleted "
 					. "only DRAFT orders";
 			}
