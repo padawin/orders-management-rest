@@ -32,7 +32,7 @@ example:
 
 ```
 // get the products where the name is "book" and the price is 20
-http://localhost/orders/?service=product&name=book&price=20
+http://localhost/orders/?service=Product&name=book&price=20
 ```
 
 ### POST Calls
@@ -45,7 +45,7 @@ example:
 
 ```
 // save a product with as name "dvd" and as price 20
-http://localhost/orders/?service=product&name=book&price=20
+http://localhost/orders/?service=Product&name=book&price=20
 ```
 
 ### PUT Calls
@@ -60,7 +60,7 @@ example:
 
 ```
 // update the product having the id 2 to set its price to 10
-http://localhost/orders/?service=product&conditions={"id_product":2}&values={"price":10}
+http://localhost/orders/?service=Product&conditions={"id_product":2}&values={"price":10}
 ```
 
 ### DELETE Calls
@@ -73,7 +73,7 @@ example:
 
 ```
 // Delete the products having as price 10
-http://localhost/orders/?service=product&price=10
+http://localhost/orders/?service=Product&price=10
 ```
 
 ## Available Services

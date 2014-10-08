@@ -124,7 +124,7 @@ abstract class Sqlite implements Model
 		);
 
 		$stmt = $this->_execute($sql, array_values($values))[0];
-		return array(self::getConnection()->lastInsertId());
+		return self::getConnection()->lastInsertId();
 	}
 
 	/**

@@ -4,7 +4,7 @@ namespace Services;
 
 use \Registry;
 use \Entities\Order as OrderEntity;
-use \Model\Order\Sqlite as OrderModel;
+use \Models\Order\Sqlite as OrderModel;
 
 class Order extends Service
 {

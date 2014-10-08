@@ -74,26 +74,25 @@ try {
 }
 catch (InvalidArgumentException $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
-	echo $e->getMessage();
+	echo json_encode(array($e->getMessage()));
 }
 catch (MethodNotAllowed $e) {
 	header("HTTP/1.0 405 Method not allowed", true, 405);
-	echo $e->getMessage();
+	echo json_encode(array($e->getMessage()));
 }
 catch (Conflict $e) {
 	header("HTTP/1.0 409 Conflict", true, 409);
-	echo $e->getMessage();
+	echo json_encode(array($e->getMessage()));
 }
 catch (BadRequest $e) {
 	header("HTTP/1.0 400 Bad Request", true, 400);
-	echo "Bad Request";
+	echo json_encode(array("Bad Request"));
 }
 catch (Duplicate $e) {
 	header("HTTP/1.0 409 Duplicate content", true, 409);
-	echo "Duplicate content";
+	echo json_encode(array("Duplicate content"));
 }
 catch (Exception $e) {
-	var_dump($e);
 	header("HTTP/1.0 500 Internal Server Error", true, 500);
-	echo "Internal Server Error";
+	echo json_encode(array("Internal Server Error"));
 }
