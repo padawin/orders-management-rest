@@ -2,8 +2,8 @@
 
 namespace Services;
 
-use \Entities\Order;
-use \Entities\Product;
+use \Entities\Order as OrderEntity;
+use \Entities\Product as ProductEntity;
 use \Entities\LineItem as LineItemEntity;
 use \Models\Order\Sqlite as OrderModel;
 use \Models\Product\Sqlite as ProductModel;
@@ -16,8 +16,8 @@ class LineItem extends Service
 	 */
 	public function __construct()
 	{
-		Order::setModel(new OrderModel());
-		Product::setModel(new ProductModel());
+		OrderEntity::setModel(new OrderModel());
+		ProductEntity::setModel(new ProductModel());
 		LineItemEntity::setModel(new LineItemModel());
 	}
 
