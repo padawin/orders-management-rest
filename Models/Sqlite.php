@@ -38,7 +38,7 @@ abstract class Sqlite implements Model
 	public static function getConnection()
 	{
 		if (self::$_connection == null) {
-			self::$_connection = new PDO('sqlite:' . Registry::get('root') . '/database/orders.db');
+			self::$_connection = new PDO('sqlite:' . Registry::get('db'));
 			self::$_connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 			self::$_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
 		}
