@@ -15,7 +15,8 @@ An order is linked to products through line items.
 ./INSTALL
 ```
 
-After that, in config.php, change the value for the key "root" to define the path to the project.
+After that, in config.php, change the value for the key "root" and "db" to define the project's
+specific paths.
 
 Then you must make the www folder accessible (symlink in your /var/www, or apache conf).
 For example a symlink order to www would make an url like: http://localhost/orders/.
