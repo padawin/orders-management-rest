@@ -45,16 +45,13 @@ try {
 			echo json_encode($service->get($criterias));
 			break;
 		case 'POST':
-			$criterias = $_GET;
-			unset($criterias['service']);
+			parse_str(file_get_contents('php://input'), $criterias);
 			echo json_encode(array($service->post($criterias)));
 			break;
 		case 'PUT':
-			$values = json_decode(isset($_GET['values']) ? $_GET['values'] : '', true);
-			$conditions = array();
-			if (isset($_GET['conditions'])) {
-				$conditions = json_decode($_GET['conditions'], true);
-			}
+			parse_str(file_get_contents('php://input'), $params);
+			$values = json_decode(isset($params['values']) ? $params['values'] : '', true);
+			$conditions = json_decode(isset($params['conditions']) ? $params['conditions'] : '', true);
 
 			if (empty($values) || $conditions === false) {
 				throw new \InvalidArgumentException("The conditions and values must be valid JSON values");
